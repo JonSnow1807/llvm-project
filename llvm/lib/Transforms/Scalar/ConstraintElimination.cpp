@@ -760,8 +760,7 @@ static bool isKnownNoSignedWrap(Instruction::BinaryOps Opcode, Value *Op0,
   constexpr unsigned MaxDepth = 2;
   return isKnownWithinSignedRange(LHS, SignedBound::Upper, Ty, Info,
                                   MaxDepth) &&
-         isKnownWithinSignedRange(LHS, SignedBound::Lower, Ty, Info,
-                                  MaxDepth);
+         isKnownWithinSignedRange(LHS, SignedBound::Lower, Ty, Info, MaxDepth);
 }
 
 /// Returns true if \p Opcode applied to \p Op0 and \p Op1 with \p NoWrapFlags
