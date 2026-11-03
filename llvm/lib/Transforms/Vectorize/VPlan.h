@@ -3023,8 +3023,6 @@ public:
     addOperand(&BackedgeValue);
   }
 
-  unsigned getNumIncoming() const override { return 2; }
-
   ~VPConditionalInductionPHIRecipe() override = default;
 
   /// Returns the underlying PHINode.
