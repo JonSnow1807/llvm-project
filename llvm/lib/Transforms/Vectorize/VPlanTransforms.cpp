@@ -6471,9 +6471,9 @@ void VPlanTransforms::convertToStridedAccesses(VPlan &Plan,
   }
 }
 
-bool VPlanTransforms::handleCompressingPatterns(VPlan &Plan,
-                                                VPRecipeBuilder &RecipeBuilder,
-                                                ScalarEvolution &SE) {
+bool VPlanTransforms::widenCompressingPatterns(VPlan &Plan,
+                                               VPRecipeBuilder &RecipeBuilder,
+                                               ScalarEvolution &SE) {
   VPBasicBlock *HeaderVPBB = Plan.getVectorLoopRegion()->getEntryBasicBlock();
   SmallDenseMap<PHINode *, SmallVector<VPInstruction *>> CondIndToMemOps;
   for (VPBasicBlock *VPBB : VPBlockUtils::blocksOnly<VPBasicBlock>(
@@ -6509,9 +6509,9 @@ bool VPlanTransforms::handleCompressingPatterns(VPlan &Plan,
 
       Builder.setInsertPoint(VPI);
       auto *CompressedMemOp =
-          Builder.insert(RecipeBuilder.handleCompressedLoadOrStore(VPI));
+          Builder.insert(RecipeBuilder.widenCompressedLoadOrStore(VPI));
 
-      VPI->replaceAllUsesWith(CompressedMemOp->getVPSingleValue());
+      VPI->replaceAllUsesWith(CompressedMemOp);
       VPI->eraseFromParent();
     }
 
@@ -6530,6 +6530,9 @@ bool VPlanTransforms::handleCompressingPatterns(VPlan &Plan,
                              {}, DL, "handled.lanes");
     VPValue *Step =
         VPSCEVExpander(Builder, SE, DL).expand(CondID.getStepSCEV());
+    if (!isa<VPConstantInt>(Step))
+      Step = Builder.createFreeze(Step);
+
     VPValue *Offset = Builder.createOverflowingOp(
         Instruction::Mul, {Step, HandledLanes}, {false, false}, DL);
     VPValue *Update =
