@@ -30234,4 +30234,8 @@
 {"__alloc_token_123__ZnwmRKSt9nothrow_t", "operator new(unsigned long, std::nothrow_t const&) (.alloc_token)"},
 {"__alloc_token__Znwm.llvm.1234", "operator new(unsigned long) (.llvm.1234) (.alloc_token)"},
 {"__alloc_token_123__Z3foov", "foo() (.alloc_token)"},
+{"_ZN1AcvSt6vectorIiSaIiEEEv", "A::operator std::vector<int, std::allocator<int>>()"},
+{"_ZNK4llvm8ArrayRefIiEcvSt6vectorIiSaIiEEEv", "llvm::ArrayRef<int>::operator std::vector<int, std::allocator<int>>() const"},
+{"_ZNK4llvm11SmallStringILj16EEcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv", "llvm::SmallString<16u>::operator std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>() const"},
+{"_ZN4llvm2cl12list_storageINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEcvRSt6vectorIS7_SaIS7_EEEv", "llvm::cl::list_storage<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>, bool>::operator std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>&()"},
     // clang-format on
