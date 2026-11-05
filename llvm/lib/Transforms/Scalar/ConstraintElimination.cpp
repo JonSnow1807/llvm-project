@@ -1178,8 +1178,7 @@ bool ConstraintInfo::isKnownPositive(Value *V) {
   if (auto *CI = dyn_cast<ConstantInt>(V))
     return CI->getValue().isStrictlyPositive();
   return ::isKnownPositive(V, DL) ||
-         doesHold(CmpInst::ICMP_SGT, const_cast<Value *>(V.getValue()),
-                  ConstantInt::get(V->getType(), 0));
+         doesHold(CmpInst::ICMP_SGT, V, ConstantInt::get(V->getType(), 0));
 }
 
 void ConstraintInfo::transferToOtherSystem(
