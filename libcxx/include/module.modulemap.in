@@ -1925,6 +1925,7 @@ module std {
     module mersenne_twister_engine            { header "__random/mersenne_twister_engine.h" }
     module negative_binomial_distribution     { header "__random/negative_binomial_distribution.h" }
     module normal_distribution                { header "__random/normal_distribution.h" }
+    module philox_engine                      { header "__random/philox_engine.h" }
     module piecewise_constant_distribution    { header "__random/piecewise_constant_distribution.h" }
     module piecewise_linear_distribution      { header "__random/piecewise_linear_distribution.h" }
     module poisson_distribution               { header "__random/poisson_distribution.h" }

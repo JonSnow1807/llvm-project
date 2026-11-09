@@ -765,6 +765,7 @@ set(files
   __random/mersenne_twister_engine.h
   __random/negative_binomial_distribution.h
   __random/normal_distribution.h
+  __random/philox_engine.h
   __random/piecewise_constant_distribution.h
   __random/piecewise_linear_distribution.h
   __random/poisson_distribution.h

@@ -746,6 +746,7 @@ queue stdexcept
 queue tuple
 queue vector
 queue version
+random array
 random cctype
 random climits
 random compare

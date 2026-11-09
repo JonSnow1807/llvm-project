@@ -197,6 +197,48 @@ basic_istream<charT, traits>&
 operator>>(basic_istream<charT, traits>& is,
            subtract_with_carry_engine<UIntType, w, s, r>& x);
 
+template<class UIntType, size_t w, size_t n, size_t r, UIntType... consts>
+class philox_engine                                                        // since C++26
+{
+public:
+    // types
+    using result_type = UIntType;
+
+    // engine characteristics
+    static constexpr size_t word_size = w;
+    static constexpr size_t word_count = n;
+    static constexpr size_t round_count = r;
+    static constexpr array<result_type, n / 2> multipliers;
+    static constexpr array<result_type, n / 2> round_consts;
+    static constexpr result_type min() { return 0; }
+    static constexpr result_type max() { return m - 1; }
+    static constexpr result_type default_seed = 20111115u;
+
+    // constructors and seeding functions
+    philox_engine() : philox_engine(default_seed) {}
+    explicit philox_engine(result_type value);
+    template<class Sseq> explicit philox_engine(Sseq& q);
+    void seed(result_type value = default_seed);
+    template<class Sseq> void seed(Sseq& q);
+
+    void set_counter(const array<result_type, n>& counter);
+
+    // equality operators
+    friend bool operator==(const philox_engine& x, const philox_engine& y);
+
+    // generating functions
+    result_type operator()();
+    void discard(unsigned long long z);
+
+    // inserters and extractors
+    template<class charT, class traits>
+      friend basic_ostream<charT, traits>&
+        operator<<(basic_ostream<charT, traits>& os, const philox_engine& x);
+    template<class charT, class traits>
+      friend basic_istream<charT, traits>&
+        operator>>(basic_istream<charT, traits>& is, philox_engine& x);
+};
+
 template<class Engine, size_t p, size_t r>
 class discard_block_engine
 {
@@ -380,6 +422,12 @@ typedef discard_block_engine<ranlux24_base, 223, 23>                   ranlux24;
 typedef discard_block_engine<ranlux48_base, 389, 11>                   ranlux48;
 typedef shuffle_order_engine<minstd_rand0, 256>                         knuth_b;
 typedef minstd_rand                                       default_random_engine;
+using philox4x32 =                                                         // since C++26
+      philox_engine<uint_fast32_t, 32, 4, 10,
+       0xCD9E8D57, 0x9E3779B9, 0xD2511F53, 0xBB67AE85>;
+using philox4x64 =                                                         // since C++26
+      philox_engine<uint_fast64_t, 64, 4, 10,
+       0xCA5A826395121157, 0x9E3779B97F4A7C15, 0xD2E7470EE14C6C93, 0xBB67AE8584CAA73B>;
 
 // Generators
 
@@ -1715,6 +1763,10 @@ class piecewise_linear_distribution
 #  include <__random/uniform_random_bit_generator.h>
 #  include <__random/uniform_real_distribution.h>
 #  include <__random/weibull_distribution.h>
+
+#  if _LIBCPP_STD_VER >= 26
+#    include <__random/philox_engine.h>
+#  endif
 #  include <version>
 
 // standard-mandated includes

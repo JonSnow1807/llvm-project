@@ -526,6 +526,19 @@ void test() {
     // expected-warning@+1 {{ignoring return value of function declared with 'nodiscard' attribute}}
     e.max();
   }
+#if TEST_STD_VER >= 26
+  {
+    std::philox4x32 e;
+
+    // expected-warning@+1 {{ignoring return value of function declared with 'nodiscard' attribute}}
+    e();
+
+    // expected-warning@+1 {{ignoring return value of function declared with 'nodiscard' attribute}}
+    e.min();
+    // expected-warning@+1 {{ignoring return value of function declared with 'nodiscard' attribute}}
+    e.max();
+  }
+#endif
   {
     std::uniform_int_distribution<int>::param_type p;
 
