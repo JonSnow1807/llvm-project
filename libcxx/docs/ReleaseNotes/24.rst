@@ -57,6 +57,7 @@ Implemented Papers
 - P3450R1: Extend ``std::is_within_lifetime`` (`Github <https://llvm.org/PR189610>`__)
 - P3793R2: Better shifting (`Github <https://llvm.org/PR219389>`__) (no ``std::simd`` overloads)
 - P0040R3: Extending memory management tools (`Github <https://github.com/llvm/llvm-project/issues/103640>`__)
+- P0952R2: A new specification for ``std::generate_canonical`` (`Github <https://llvm.org/PR105396>`__)
 
 Improvements and New Features
 -----------------------------
@@ -71,6 +72,11 @@ Deprecations and Removals
 
 Potentially breaking changes
 ----------------------------
+
+- ``std::generate_canonical`` now implements P0952R2 in C++11 and later, so it never returns ``1.0``. As a result,
+  the values it returns and the number of times it calls the random number generator differ from previous releases.
+  This also changes the results of the random number distributions that are based on it, like
+  ``std::uniform_real_distribution``.
 
 - In LLVM 23, libc++ dropped a lot of transitive includes in all language modes. This improves compile time significantly,
   but causes programs which rely on these includes to not compile anymore. The ``_LIBCPP_KEEP_TRANSITIVE_INCLUDES_LLVM23``

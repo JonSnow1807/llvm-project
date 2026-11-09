@@ -438,7 +438,7 @@ public:
     void operator=(const seed_seq& ) = delete;
 };
 
-template<class RealType, size_t bits, class URNG>
+template<class RealType, size_t digits, class URNG>
     RealType generate_canonical(URNG& g);
 
 // Distributions
